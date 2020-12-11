@@ -43,10 +43,9 @@ namespace book
 
             models::Side new_side = handler->get_side(order.get_side());
 
-
-            if (old_side.get_shares() != new_side.get_shares()) {
+            if (old_side.get_total() != new_side.get_total()) {
                 viewer->render(new_side, target_shares);
-            }
+            } 
 
         }
 

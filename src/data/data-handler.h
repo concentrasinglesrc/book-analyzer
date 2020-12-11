@@ -56,12 +56,29 @@ namespace book
                 order.get_side().c_str(), order.get_price());
             auto & side_order = choose_side_order(order.get_side());
             auto & orders = side_order.get_orders();
-            orders[order.get_id()] = order;
+
+            auto order_p = orders.find(order.get_id());
+            if (orders.end() == order_p) {
+                orders[order.get_id()] = order;
+            } else {
+                if (0 < order.get_shares()) orders[order.get_id()] = order;
+                else orders.erase(order_p);
+            }
 
             auto & sorted_orders = side_order.get_orders_by_price();
-            sorted_orders[order.get_price()].insert(order.get_id());
+            auto id_p = sorted_orders[order.get_price()].find(order.get_id());
+            if (sorted_orders[order.get_price()].end() == id_p) {
+                sorted_orders[order.get_price()].insert(order.get_id());
+            } else {
+                if (0 < order.get_shares()) 
+                    sorted_orders[order.get_price()].insert(order.get_id());
+                else sorted_orders[order.get_price()].erase(order.get_id());
+            }
 
-            log.apply_if(logger::INFO, [this] () {
+            log.info("%ld bids, %ld sells", buy_expenses.get_orders().size(),
+                sell_income.get_orders().size());
+
+            log.apply_if(logger::DEBUG, [this] () {
                 this->dump_orders(sell_income.get_orders());
                 this->dump_orders(buy_expenses.get_orders());
             });
@@ -108,8 +125,8 @@ namespace book
             float total = 0.0f;
             long shares = 0;
             long required_shares = target_shares;
-            for (auto it = begin; it != end && target_shares > 0; ++it) {
-                log.debug("price: %.2f", it->first);
+            for (auto it = begin; it != end && required_shares > 0; ++it) {
+                log.info("price: %.2f", it->first);
                 for (auto & id : it->second) {
                     auto order = get_order(id);
                     if (required_shares > order.get_shares()) {
@@ -152,6 +169,10 @@ namespace book
             if (order.get_shares() < 0) {
                 log.warn("Unable to process Order, shares is negative %d", order.get_shares());
                 return false;
+            }
+
+            if (0 == order.get_timestamp()) {
+                log.warn("Unable to process Order, order is empty");
             }
 
             return true;

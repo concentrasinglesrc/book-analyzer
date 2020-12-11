@@ -47,6 +47,7 @@ namespace book
 
             do {
                 int rc = reader->get_page(page);
+                log.info("Read page of %ld entries", page.get_token());
                 if (rc) return rc;
 
                 rc = page.read([=](std::string const & line){

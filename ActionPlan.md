@@ -48,27 +48,27 @@
     [x] expenses starts with NA
     [x] income starts with
     [x] on add to order bid, save order id to book
-    [ ] on add to order sell, save order id to book
-    [ ] calculate expenses when total buy shares is greater than or equal to target size
-    [ ] calculate income when total sell shares are greater than or equal to target size 
-    [ ] on reduce order, update order id to book
-    [ ] expenses are NA when reduce order reduces total buy shares under target size
-    [ ] income is NA when reduce order reduces total sell shares under target size
-    [ ] skip printing to stdout when add to order is processed but total shares are less than target size
-    [ ] calculate expenses with the lowest bid price first
-    [ ] calculate income with the highest ask price first
+    [x] on add to order sell, save order id to book
+    [x] calculate expenses when total buy shares is greater than or equal to target size
+    [x] calculate income when total sell shares are greater than or equal to target size 
+    [x] on reduce order, update order id to book
+    [x] expenses are NA when reduce order reduces total buy shares under target size
+    [x] income is NA when reduce order reduces total sell shares under target size
+    [x] skip printing to stdout when add to order is processed but total shares are less than target size
+    [x] calculate expenses with the lowest bid price first
+    [x] calculate income with the highest ask price first
 
 ## Non-Functional Requirements
 
-[ ] capacity
-    [ ] ~able to read x lines : approx x textfile~
-    [ ] what is the performance? records per/second
-[ ] development
-    [ ] cli end to end test
+[x] capacity
+    [x] ~able to read x lines : approx x textfile~
+    [x] what is the performance? records per/second
+[x] development
+    [x] cli end to end test
     [ ] unit-testing (optional with gtest)
     [ ] autotools setup
     [ ] ? boost
-[ ] docs    
-    [ ] readme setup
-    [ ] quick start
-    [ ] dependecies
+[x] docs    
+    [x] readme setup
+    [x] quick start
+    [x] dependecies

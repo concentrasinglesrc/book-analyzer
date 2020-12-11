@@ -65,13 +65,13 @@ namespace book
 
         bool validate_add_order(std::vector<std::string> const & args) {
             if (args.size() != 6) {
-                log.warn("[WARN]: malformed add order, arg size mismatch");
+                log.warn("malformed add order, arg size mismatch");
                 return false;
             }
 
 
             if (args[3] != "S" && args[3] != "B") {
-                log.warn("[WARN]: side is not supported %s", args[3].c_str());
+                log.warn("side is not supported %s", args[3].c_str());
                 return false;
             }
 
@@ -116,7 +116,7 @@ namespace book
 
         bool validate_empty(std::vector<std::string> const & args) {
             if (args.empty()) {
-                log.warn("[WARN]: empty line");
+                log.warn("empty line");
                 return false;
             }
 
