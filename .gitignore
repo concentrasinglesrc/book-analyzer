@@ -11,22 +11,60 @@
 *.gch
 *.pch
 
-# Compiled Dynamic libraries
-*.so
-*.dylib
-*.dll
-
-# Fortran module files
-*.mod
-*.smod
-
-# Compiled Static libraries
-*.lai
-*.la
-*.a
+# Libraries
 *.lib
+*.a
+*.la
+*.lo
+
+# Shared objects (inc. Windows DLLs)
+*.dll
+*.so
+*.so.*
+*.dylib
 
 # Executables
 *.exe
 *.out
 *.app
+*.i*86
+*.x86_64
+*.hex
+tst/unit-test
+
+# Debug files
+*.dSYM/
+*.su
+*.idb
+*.pdb
+
+# Kernel Module Compile Results
+*.mod*
+*.cmd
+.tmp_versions/
+modules.order
+Module.symvers
+Mkfile.old
+dkms.conf
+
+# VSCode
+.vscode
+
+# Autotools, Automake, Autoconf
+.dirstamp
+.deps
+.libs
+*.m4
+*.pc
+autom4te.cache
+build-aux
+config.*
+configure
+libtool
+Makefile.in
+Makefile
+
+# Project book-analyzer
+book-analyzer
+unittest
+
