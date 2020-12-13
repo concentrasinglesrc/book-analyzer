@@ -10,9 +10,10 @@ nobase_include_HEADERS =
 book_analyzer_CPPFLAGS = $(BCCP_FLAGS) -I src
 # Unit Tests
 check_PROGRAMS = unittest
-unittest_SOURCES = 
+unittest_SOURCES = \
+tst/serializer.cc
 
-unittest_CPPFLAGS = -I ./googletest/googlemock/include -I./googletest/googletest/include $(BCCP_FLAGS)
+unittest_CPPFLAGS = -I src -I ./googletest/googlemock/include -I./googletest/googletest/include $(BCCP_FLAGS)
 unittest_LDADD = -L ./googletest/lib -lgmock -lgmock_main -lgtest -lgtest_main -lpthread
 
 EXTRA_DIST = m4/NOTES

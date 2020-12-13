@@ -4,7 +4,6 @@
 #include <iostream>
 #include <string>
 #include <vector>
-#include "commands/command.h"
 #include "logger/log.h"
 
 #define VALIDATE_NUM(var, arg) \
