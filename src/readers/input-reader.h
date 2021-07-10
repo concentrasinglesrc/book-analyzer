@@ -56,7 +56,7 @@ namespace book
     private:
         static logger::Log log;
     public:
-        ~StdInputReader(void) {}
+        virtual ~StdInputReader(void) {}
 
         int get_page(Page & page) {
             if (-1 == std::cin.tellg()) {
@@ -81,7 +81,7 @@ namespace book
         : filepath(filepath) {
         }
 
-        ~FileInputReader(void) {
+        virtual ~FileInputReader(void) {
         }
 
         int get_page(Page & page) {
@@ -100,14 +100,19 @@ namespace book
         }
     };
     
-    class InputReaderFactory
+    class InputReaderFactory {
+      public:
+      virtual std::unique_ptr<InputReader> create_reader(void) = 0;
+    };
+
+    class InputReaderFactoryImpl : public InputReaderFactory
     {
         private:
         std::string filepath;
         public:
-        InputReaderFactory(std::string const & filepath)
+        INJECT(InputReaderFactoryImpl(std::string const & filepath))
         : filepath(filepath) {}
-        ~InputReaderFactory() {}
+        virtual ~InputReaderFactoryImpl(void) {}
 
         std::unique_ptr<InputReader> create_reader(void) {
             if (filepath.empty()) {

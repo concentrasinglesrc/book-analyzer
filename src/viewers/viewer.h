@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include "data/data-handler.h"
+#include "fruit/fruit.h"
 #include "logger/log.h"
 #include "models/side.h"
 #include "serializers/serializer.h"
@@ -10,14 +11,21 @@
 namespace book
 {
 
-    class Viewer
+    class Viewer {
+      public:
+
+      virtual void render(models::Side const & side, long const target_shares) = 0;
+      virtual std::string order_to_action_side(std::string const & order_side) = 0;
+    };
+
+    class ViewerImpl : public Viewer
     {
         std::ostream * os;
         Serializer * serializer;
         static logger::Log log;
     public:
-        Viewer(std::ostream & os, Serializer & serializer) : os (&os) {}
-        ~Viewer() {}
+        INJECT(ViewerImpl(std::ostream * os, Serializer * serializer)) : os (os), serializer(serializer) {}
+        virtual ~ViewerImpl(void) {}
 
         void render(models::Side const & side, long const target_shares) {
             ActionDetails action_details = 
@@ -48,10 +56,8 @@ namespace book
         }
     };
 
-    logger::Log Viewer::log(__FILE__);
+    logger::Log ViewerImpl::log(__FILE__);
     
 } // namespace book
-
-
 
 #endif // !VIEWER_H

@@ -5,6 +5,7 @@
 #include <vector>
 
 #include "logger/log.h"
+#include "fruit/fruit.h"
 #include "models/side-order.h"
 
 namespace book
@@ -29,9 +30,10 @@ namespace book
         models::SideOrder sell_income;
         static logger::Log log;
     public:
-        LocalDataHandler(void) 
+        INJECT(LocalDataHandler(void))
         : buy_expenses("B"), sell_income("S") {}
-        ~LocalDataHandler(void) {}
+
+        virtual ~LocalDataHandler(void) {}
 
         models::Side get_side(std::string const & side) {
             auto side_order = choose_side_order(side);
@@ -75,7 +77,7 @@ namespace book
                 else sorted_orders[order.get_price()].erase(order.get_id());
             }
 
-            log.info("%ld bids, %ld sells", buy_expenses.get_orders().size(),
+            log._info("%ld bids, %ld sells", buy_expenses.get_orders().size(),
                 sell_income.get_orders().size());
 
             log.apply_if(logger::DEBUG, [this] () {
@@ -105,16 +107,16 @@ namespace book
     private:
         template<typename Container>
         void dump_orders(Container const & orders) {
-            log.info("{");
+            log._info("{");
             for (auto & p : orders) {
-                log.info("  { id: %s, order: { side: %s, timestamp: %ld, "
+                log._info("  { id: %s, order: { side: %s, timestamp: %ld, "
                     "price: %.2f, shares: %ld}},", p.first.c_str(), 
                     p.second.get_side().c_str(), 
                     p.second.get_timestamp(),
                     p.second.get_price(),
                     p.second.get_shares());
             }
-            log.info("}");
+            log._info("}");
         }
 
         template<typename Iterator>
@@ -126,7 +128,7 @@ namespace book
             long shares = 0;
             long required_shares = target_shares;
             for (auto it = begin; it != end && required_shares > 0; ++it) {
-                log.info("price: %.2f", it->first);
+                log._info("price: %.2f", it->first);
                 for (auto & id : it->second) {
                     auto order = get_order(id);
                     if (required_shares > order.get_shares()) {
@@ -142,7 +144,7 @@ namespace book
                 }
             }
 
-            log.info("Calculated %s total: %.2f, shares: %ld, remainder: %ld", side.get_side().c_str(),
+            log._info("Calculated %s total: %.2f, shares: %ld, remainder: %ld", side.get_side().c_str(),
                 total, 
                 shares,
                 target_shares); 
@@ -152,7 +154,7 @@ namespace book
                 shares = 0l;
             }
 
-            log.info("Store %s total: %.2f, shares: %ld", side.get_side().c_str(),
+            log._info("Store %s total: %.2f, shares: %ld", side.get_side().c_str(),
                 total, 
                 shares); 
             side.set_timestamp(timestamp);

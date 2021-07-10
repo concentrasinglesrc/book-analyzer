@@ -6,7 +6,7 @@
 #include <string>
 
 #define debug(...) log(logger::DEBUG, __LINE__, __VA_ARGS__);
-#define info(...) log(logger::INFO, __LINE__, __VA_ARGS__);
+#define _info(...) log(logger::INFO, __LINE__, __VA_ARGS__);
 #define warn(...) log(logger::WARN, __LINE__, __VA_ARGS__);
 #define error(...) log(logger::ERROR, __LINE__, __VA_ARGS__);
 

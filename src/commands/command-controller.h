@@ -8,6 +8,7 @@
 #include <vector>
 #include "command.h"
 #include "data/data-handler.h"
+#include "fruit/fruit.h"
 #include "logger/log.h"
 #include "models/order.h"
 #include "validators/input-validator.h"
@@ -95,7 +96,19 @@ namespace book
         }
     };
     
-    class CommandController
+    class CommandController{
+      public:
+      virtual void subscribe(std::string const && command, 
+            std::function<std::unique_ptr<Command> (DataHandler&, 
+                Serializer&, Viewer&)> make_command) = 0;
+
+      virtual std::unique_ptr<Command> parse_command(std::string const & command, 
+            Serializer & serializer, 
+            DataHandler & handler,
+            Viewer & viewer) = 0;
+    };
+
+    class CommandControllerImpl : public CommandController
     {
     private:
         std::unordered_map<std::string,
@@ -103,8 +116,8 @@ namespace book
             dispatcher;
 
     public:
-        CommandController() : dispatcher() {}
-        virtual ~CommandController() {}
+        INJECT(CommandControllerImpl(void)) : dispatcher() {}
+        virtual ~CommandControllerImpl() {}
 
         void subscribe(std::string const && command, 
             std::function<std::unique_ptr<Command> (DataHandler&, 

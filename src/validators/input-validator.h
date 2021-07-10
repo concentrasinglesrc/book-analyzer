@@ -4,6 +4,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include "fruit/fruit.h"
 #include "logger/log.h"
 
 #define VALIDATE_NUM(var, arg) \
@@ -15,14 +16,23 @@ if (!parse_num(var, arg)) {                                \
 namespace book 
 {
 
+    class InputValidator {
+      public:
+      virtual bool validate_order(std::vector<std::string> const & args) = 0;
+      virtual bool validate_reduce_order(std::vector<std::string> const & args) = 0;
+      virtual bool validate_add_order(std::vector<std::string> const & args) = 0;
+    };
 
-    class InputValidator
+    class InputValidatorImpl : public InputValidator
     {
         static long const DAY_IN_MS = 86400000l;
         static logger::Log log;
 
     public:
-        virtual ~InputValidator() {}
+        INJECT(InputValidatorImpl(void)) = default;
+
+        virtual ~InputValidatorImpl(void) {}
+
         bool validate_order(std::vector<std::string> const & args) {
             if (!validate_empty(args)) return false;
 
@@ -130,7 +140,7 @@ namespace book
         }
     };
 
-    logger::Log InputValidator::log(__FILE__);
+    logger::Log InputValidatorImpl::log(__FILE__);
     
 } // namespace book 
 
