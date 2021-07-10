@@ -7,6 +7,8 @@ src/book-analyzer.cc
 
 nobase_include_HEADERS = 
 
+book_analyzer_LDADD=-L /usr/local/lib -lfruit
+
 book_analyzer_CPPFLAGS = $(BCCP_FLAGS) -I src -I /usr/local/include
 # Unit Tests
 check_PROGRAMS = unittest
