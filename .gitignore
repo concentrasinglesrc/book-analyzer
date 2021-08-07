@@ -50,6 +50,9 @@ dkms.conf
 # VSCode
 .vscode
 
+# Vim
+tags
+
 # Autotools, Automake, Autoconf
 .dirstamp
 .deps
