@@ -1,6 +1,8 @@
 #ifndef ACTION_DETAILS_H
 #define ACTION_DETAILS_H
 
+#include <string>
+
 namespace book {
 class ActionDetails {
 
@@ -35,4 +37,4 @@ public:
 
 } // namespace book
 
-#endif // !ACTION_DETAILS_H
+#endif // ACTION_DETAILS_H

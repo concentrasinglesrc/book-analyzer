@@ -15,11 +15,18 @@
 namespace book {
 
 class InputValidator {
+public:
+  virtual bool validate_order(std::vector<std::string> const &args) = 0;
+  virtual bool validate_reduce_order(std::vector<std::string> const &args) = 0;
+  virtual bool validate_add_order(std::vector<std::string> const &args) = 0;
+};
+
+class InputValidatorImpl : public InputValidator {
   static long const DAY_IN_MS = 86400000l;
   static logger::Log log;
 
 public:
-  virtual ~InputValidator() {}
+  virtual ~InputValidatorImpl(void) {}
   bool validate_order(std::vector<std::string> const &args) {
     if (!validate_empty(args))
       return false;
@@ -126,7 +133,7 @@ private:
   }
 };
 
-logger::Log InputValidator::log(__FILE__);
+logger::Log InputValidatorImpl::log(__FILE__);
 
 } // namespace book
 

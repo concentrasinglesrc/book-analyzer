@@ -28,7 +28,7 @@ int main(int argc, char ** argv) {
     std::string filepath;
 
     book::InputReaderFactory factory(filepath);
-    book::InputValidator validator;
+    book::InputValidatorImpl validator;
     book::LocalDataHandler handler;
     book::Serializer serializer(validator);
     book::Viewer viewer(std::cout, serializer);
