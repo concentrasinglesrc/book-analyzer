@@ -38,6 +38,7 @@ public:
 
     long timestamp;
     VALIDATE_NUM(timestamp, args[0]);
+    log.info("timestamp = %d", timestamp);
 
     if (timestamp < 0 || timestamp > DAY_IN_MS) {
       log.warn("timestamp out of day bounds");
@@ -52,6 +53,8 @@ public:
   }
 
   bool validate_reduce_order(std::vector<std::string> const &args) {
+    if (!validate_order(args)) return false;
+
     if (args.size() != 4) {
       log.warn("malformed reduce order, arg size mismatch");
       return false;
@@ -68,6 +71,8 @@ public:
   }
 
   bool validate_add_order(std::vector<std::string> const &args) {
+    if (!validate_order(args)) return false;
+
     if (args.size() != 6) {
       log.warn("malformed add order, arg size mismatch");
       return false;
@@ -133,7 +138,6 @@ private:
   }
 };
 
-logger::Log InputValidatorImpl::log(__FILE__);
 
 } // namespace book
 
