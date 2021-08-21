@@ -79,10 +79,10 @@ static struct ValidatorData ReduceOrderDetailsData[] = {
      REDUCE_ORDER_VALIDATOR}, // failure timestamp is not a num
     {{"29024925", "A", "ye", "B", "43.88", "100"},
      false,
-     ORDER_VALIDATOR}, // failure order type is not reduce order
-    {{"29019435", "R", "ue", "100"},
+     REDUCE_ORDER_VALIDATOR}, // failure order type is not reduce order
+    {{"29019435", "R", "ue", "-100"},
      false,
-     REDUCE_ORDER_VALIDATOR}, // failure negative timestamp
+     REDUCE_ORDER_VALIDATOR}, // failure negative size
     {{"29019435", "R", "ue", "100"},
      true,
      REDUCE_ORDER_VALIDATOR}, // successfull reduce order

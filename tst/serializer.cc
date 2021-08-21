@@ -13,7 +13,7 @@ protected:
   std::unique_ptr<book::Serializer> under_test;
 
 public:
-  void SetUp(void) { under_test.reset(new book::Serializer(mock_validator)); }
+  void SetUp(void) { under_test.reset(new book::SerializerImpl(&mock_validator)); }
 };
 
 TEST_F(SerializerTest, given_deserialize_reduce_order_then_return_error_when_order_is_invalid) {

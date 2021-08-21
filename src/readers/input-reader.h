@@ -94,7 +94,7 @@ public:
 
 class InputReaderFactory {
 public:
-  virtual InputReaderFactory(void) {}
+  virtual ~InputReaderFactory(void) {}
   virtual std::unique_ptr<InputReader> create_reader(void) = 0;
 };
 

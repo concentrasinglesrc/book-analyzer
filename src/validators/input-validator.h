@@ -42,7 +42,7 @@ public:
 
     long timestamp;
     VALIDATE_NUM(timestamp, args[0]);
-    log.info("timestamp = %d", timestamp);
+    log._info("timestamp = %d", timestamp);
 
     if (timestamp < 0 || timestamp > DAY_IN_MS) {
       log.warn("timestamp out of day bounds");
