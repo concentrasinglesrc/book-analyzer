@@ -1,6 +1,7 @@
 #ifndef INPUT_VALIDATOR_H
 #define INPUT_VALIDATOR_H
 
+#include "fruit/fruit.h"
 #include "logger/log.h"
 #include <iostream>
 #include <string>
@@ -26,7 +27,10 @@ class InputValidatorImpl : public InputValidator {
   static logger::Log log;
 
 public:
+  INJECT(InputValidatorImpl(void)) = default;
+
   virtual ~InputValidatorImpl(void) {}
+
   bool validate_order(std::vector<std::string> const &args) {
     if (!validate_empty(args))
       return false;
@@ -137,7 +141,6 @@ private:
     return true;
   }
 };
-
 
 } // namespace book
 

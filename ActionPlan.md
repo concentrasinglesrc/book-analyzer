@@ -67,8 +67,14 @@
     [x] cli end to end test
     [ ] unit-testing (optional with gtest)
     [ ] autotools setup
+    [ ] refactor class - per file
+    [ ] data-driven unittest
     [ ] ? boost
 [x] docs    
     [x] readme setup
     [x] quick start
     [x] dependecies
+[ ] add injection framework
+    [ ] fruit primer
+    [ ] remove factories and use assisted injection
+    [ ] refactor a component dir

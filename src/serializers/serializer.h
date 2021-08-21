@@ -2,6 +2,7 @@
 #define SERIALIZER_H
 
 #include "action-details.h"
+#include "fruit/fruit.h"
 #include "logger/log.h"
 #include "order-details.h"
 #include "util/utility.h"
@@ -13,13 +14,24 @@
 #include <vector>
 
 namespace book {
-
 class Serializer {
+public:
+  virtual int deserialize(ReduceOrderDetails &order,
+                          std::vector<std::string> const &args) = 0;
+  virtual int deserialize(AddOrderDetails &order,
+                          std::vector<std::string> const &args) = 0;
+  virtual std::string serialize(ActionDetails const &action,
+                                long const target_shares) = 0;
+};
+
+class SerializerImpl : public Serializer {
   InputValidator *validator;
   static logger::Log log;
 
 public:
-  Serializer(InputValidator &validator) : validator(&validator) {}
+  INJECT(SerializerImpl(InputValidator *validator)) : validator(validator) {}
+
+  virtual ~SerializerImpl(void) {}
 
   int deserialize(ReduceOrderDetails &order,
                   std::vector<std::string> const &args) {
@@ -63,7 +75,7 @@ public:
   }
 };
 
-logger::Log Serializer::log(__FILE__);
+logger::Log SerializerImpl::log(__FILE__);
 } // namespace book
 
 #endif // !SERIALIZER_H

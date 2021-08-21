@@ -47,8 +47,11 @@ Module.symvers
 Mkfile.old
 dkms.conf
 
-# VSCode
+# IDEs
 .vscode
+.project
+.cproject
+tags
 
 # Vim
 tags

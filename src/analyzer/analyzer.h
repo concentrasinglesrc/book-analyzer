@@ -3,6 +3,7 @@
 
 #include "commands/command-controller.h"
 #include "data/data-handler.h"
+#include "fruit/fruit.h"
 #include "logger/log.h"
 #include "readers/input-reader.h"
 #include "serializers/serializer.h"
@@ -15,6 +16,11 @@
 
 namespace book {
 class Analyzer {
+public:
+  virtual int run(long target_shares) = 0;
+};
+
+class AnalyzerImpl : public Analyzer {
 
   InputReaderFactory *factory;
   InputValidator *validator;
@@ -26,11 +32,11 @@ class Analyzer {
   static logger::Log log;
 
 public:
-  Analyzer(InputReaderFactory &factory, InputValidator &validator,
-           Serializer &serializer, CommandController &controller,
-           DataHandler &handler, Viewer &viewer)
-      : factory(&factory), validator(&validator), serializer(&serializer),
-        controller(&controller), handler(&handler), viewer(&viewer) {}
+  INJECT(AnalyzerImpl(InputReaderFactory *factory, InputValidator *validator,
+                      Serializer *serializer, CommandController *controller,
+                      DataHandler *handler, Viewer *viewer))
+      : factory(factory), validator(validator), serializer(serializer),
+        controller(controller), handler(handler), viewer(viewer) {}
 
   int run(long target_shares) {
     on_init();
@@ -39,14 +45,14 @@ public:
 
     do {
       int rc = reader->get_page(page);
-      log.info("Read page of %ld entries", page.get_token());
+      log._info("Read page of %ld entries", page.get_token());
       if (rc)
         return rc;
 
       rc = page.read([=](std::string const &line) {
-        log.info("-------------------------------------------------------------"
-                 "-------------------");
-        log.info("Line: %s", line.c_str());
+        log._info("------------------------------------------------------------"
+                  "--------------------");
+        log._info("Line: %s", line.c_str());
         auto args = utility::split_line(line);
         std::string arg_log;
         for (auto &it : args)
@@ -82,7 +88,7 @@ private:
   }
 };
 
-logger::Log Analyzer::log(__FILE__);
+logger::Log AnalyzerImpl::log(__FILE__);
 } // namespace book
 
 #endif // !ANALYZER_H

@@ -52,7 +52,7 @@ private:
   static logger::Log log;
 
 public:
-  ~StdInputReader(void) {}
+  virtual ~StdInputReader(void) {}
 
   int get_page(Page &page) {
     if (-1 == std::cin.tellg()) {
@@ -74,7 +74,7 @@ private:
 public:
   FileInputReader(std::string const &filepath) : filepath(filepath) {}
 
-  ~FileInputReader(void) {}
+  virtual ~FileInputReader(void) {}
 
   int get_page(Page &page) {
     std::ifstream file;
@@ -93,12 +93,19 @@ public:
 };
 
 class InputReaderFactory {
+public:
+  virtual InputReaderFactory(void) {}
+  virtual std::unique_ptr<InputReader> create_reader(void) = 0;
+};
+
+class InputReaderFactoryImpl : public InputReaderFactory {
 private:
   std::string filepath;
 
 public:
-  InputReaderFactory(std::string const &filepath) : filepath(filepath) {}
-  ~InputReaderFactory() {}
+  INJECT(InputReaderFactoryImpl(std::string const &filepath))
+      : filepath(filepath) {}
+  virtual ~InputReaderFactoryImpl(void) {}
 
   std::unique_ptr<InputReader> create_reader(void) {
     if (filepath.empty()) {
