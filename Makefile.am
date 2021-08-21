@@ -3,7 +3,9 @@ AM_CXXFLAGS=-std=c++1y
 # Program 
 bin_PROGRAMS = book-analyzer
 book_analyzer_SOURCES = \
-src/book-analyzer.cc
+src/book-analyzer.cc              \
+src/logger/log.cc                 \
+src/validators/input-validator.cc 
 
 nobase_include_HEADERS = 
 
@@ -13,7 +15,10 @@ book_analyzer_CPPFLAGS = $(BCCP_FLAGS) -I src -I /usr/local/include
 # Unit Tests
 check_PROGRAMS = unittest
 unittest_SOURCES = \
-tst/serializer.cc
+src/logger/log.cc                 \
+src/validators/input-validator.cc \
+tst/serializer.cc                 \
+tst/validators.cc                 
 
 unittest_CPPFLAGS = -I src -I ./googletest/googlemock/include -I./googletest/googletest/include $(BCCP_FLAGS)
 unittest_LDADD = -L ./googletest/lib -lgmock -lgmock_main -lgtest -lgtest_main -lpthread

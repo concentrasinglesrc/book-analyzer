@@ -53,6 +53,9 @@ dkms.conf
 .cproject
 tags
 
+# Vim
+tags
+
 # Autotools, Automake, Autoconf
 .dirstamp
 .deps
